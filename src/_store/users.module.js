@@ -15,12 +15,14 @@ const actions = {
   },
 
   delete({ commit }, id) {
-    commit("deleteRequest", id);
+    if (confirm("Are you sure?") === true) {
+      commit("deleteRequest", id);
 
-    userService.delete(id).then(
-      (user) => commit("deleteSuccess", id),
-      (error) => commit("deleteFailure", { id, error: error.toString() })
-    );
+      userService.delete(id).then(
+        (user) => commit("deleteSuccess", id),
+        (error) => commit("deleteFailure", { id, error: error.toString() })
+      );
+    }
   },
 };
 
