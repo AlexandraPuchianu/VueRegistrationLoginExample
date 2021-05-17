@@ -46,7 +46,6 @@ export function configureFakeBackend() {
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
                         axios.get("https://localhost:5001/employee/Employee")
                         .then(response => {
-                            console.log(response.data)
                             employees = response.data;
                             resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(employees))});
                         })
