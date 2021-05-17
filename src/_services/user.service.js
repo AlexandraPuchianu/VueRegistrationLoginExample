@@ -11,7 +11,7 @@ export const userService = {
   delete: _delete,
 };
 
-function login(username, password) {
+function login(username, password, remember) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -25,17 +25,17 @@ function login(username, password) {
       if (user.token && remember) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem("user", JSON.stringify(user));
+        return user;
       } else {
-        const userWithoutToken = {
-          firstName: user.firstName,
+        let userWithoutToken = {
           id: user.id,
+          firstName: user.firstName,
           lastName: user.lastName,
           username: user.username,
         };
         localStorage.setItem("user", JSON.stringify(userWithoutToken));
+        return userWithoutToken;
       }
-
-      return user;
     });
 }
 
