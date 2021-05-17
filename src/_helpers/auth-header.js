@@ -5,6 +5,9 @@ export function authHeader() {
   if (user && user.token) {
     return { Authorization: "Bearer " + user.token };
   } else {
+    if (store.state.account.jwtToken) {
+      return { Authorization: "Bearer " + store.state.account.jwtToken };
+    }
     return {};
   }
 }
