@@ -101,18 +101,27 @@ export function configureFakeBackend() {
                     return;
                 }
 
-                // delete user
+                // delete employee
                 if (url.match(/\/users\/\d+$/) && opts.method === 'DELETE') {
                     // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        // find user by id in users array
+                        // find employee by id in employees array
                         let urlParts = url.split('/');
                         let id = parseInt(urlParts[urlParts.length - 1]);
-                        for (let i = 0; i < users.length; i++) {
-                            let user = users[i];
-                            if (user.id === id) {
-                                // delete user
-                                users.splice(i, 1);
+
+                        axios.delete("https://localhost:5001/employee/Employee/" + id)
+                        .then((resp) => {
+                            console.log(resp);
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+
+                        for (let i = 0; i < employees.length; i++) {
+                            let employee = employees[i];
+                            if (employee.id === id) {
+                                // delete employee
+                                employees.splice(i, 1);
                                 localStorage.setItem('users', JSON.stringify(users));
                                 break;
                             }
