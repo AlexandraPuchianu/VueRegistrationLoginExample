@@ -27,6 +27,8 @@
         <div v-show="submitted && !password" class="invalid-feedback">
           Password is required
         </div>
+        <input type="checkbox" id="remember" name="remember" v-model="remember" value="true" />
+        <label for="remember">Remember me</label>
       </div>
       <div class="form-group">
         <button class="btn btn-primary" :disabled="status.loggingIn">
@@ -50,6 +52,7 @@ export default {
     return {
       username: "",
       password: "",
+      remember: false,
       submitted: false,
     };
   },
@@ -64,9 +67,9 @@ export default {
     ...mapActions("account", ["login", "logout"]),
     handleSubmit(e) {
       this.submitted = true;
-      const { username, password } = this;
+      const { username, password, remember } = this;
       if (username && password) {
-        this.login({ username, password });
+        this.login({ username, password, remember });
       }
     },
   },
